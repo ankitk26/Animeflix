@@ -1,0 +1,29 @@
+@import "base";
+
+// Header section
+@import "nav";
+
+// Home Section
+@import "anime-item";
+
+// Anime Info
+@import "anime-info";
+
+@import "media-queries";
+
+.show_more_btn {
+  background-color: #ddd;
+  color: #272727;
+  font-size: 1rem;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }
+}
+.show_btn_wrapper {
+  display: flex;
+  justify-content: center;
+}
