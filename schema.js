@@ -1,5 +1,15 @@
-const { GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLFloat, GraphQLList } = require("graphql");
+const {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLInt,
+  GraphQLString,
+  GraphQLFloat,
+  GraphQLList,
+} = require("graphql");
 
+const axios = require("axios");
+
+// Import resolvers
 const {
   fetchGenre,
   fetchAnime,
@@ -8,8 +18,11 @@ const {
   fetchTopAnimes,
   fetchUpcoming,
   searchAnime,
+  fetchStudios,
+  fetchAiring,
 } = require("./resolvers");
 
+// Information of the anime selected
 const AnimeType = new GraphQLObjectType({
   name: "AnimeType",
   fields: () => ({
@@ -25,6 +38,7 @@ const AnimeType = new GraphQLObjectType({
     score: { type: GraphQLFloat },
     type: { type: GraphQLString },
     rating: { type: GraphQLString },
+    studios: { type: new GraphQLList(GenreType) },
     aired: {
       type: new GraphQLObjectType({
         name: "Aired",
@@ -45,6 +59,7 @@ const AnimeType = new GraphQLObjectType({
   }),
 });
 
+// Individual genre
 const GenreType = new GraphQLObjectType({
   name: "GenreType",
   fields: () => ({
@@ -53,6 +68,7 @@ const GenreType = new GraphQLObjectType({
   }),
 });
 
+// Get all genre of an anime
 const GenresType = new GraphQLObjectType({
   name: "GenresType",
   fields: () => ({
@@ -70,6 +86,25 @@ const GenresType = new GraphQLObjectType({
   }),
 });
 
+// All anime of selected studio
+const StudioType = new GraphQLObjectType({
+  name: "StudioType",
+  fields: () => ({
+    meta: {
+      type: new GraphQLObjectType({
+        name: "StudioNameType",
+        fields: () => ({
+          name: { type: GraphQLString },
+        }),
+      }),
+    },
+    anime: {
+      type: new GraphQLList(DisplayAnimesType),
+    },
+  }),
+});
+
+// Used in top anime and upcoming anime
 const DisplayAnimesType = new GraphQLObjectType({
   name: "DisplayAnimesType",
   fields: () => ({
@@ -80,6 +115,7 @@ const DisplayAnimesType = new GraphQLObjectType({
   }),
 });
 
+// Root Query
 const RootQuery = new GraphQLObjectType({
   name: "RootQuery",
   fields: {
@@ -100,11 +136,20 @@ const RootQuery = new GraphQLObjectType({
     search: {
       type: new GraphQLList(DisplayAnimesType),
       args: { query: { type: GraphQLString } },
-      resolve: (parent, args) => searchAnime(args),
+      resolve: (parent, args) => searchAnime(args.query),
     },
     upcoming: {
       type: new GraphQLList(DisplayAnimesType),
       resolve: () => fetchUpcoming(),
+    },
+    studio: {
+      type: StudioType,
+      args: { id: { type: GraphQLInt } },
+      resolve: (_, args) => fetchStudios(args.id),
+    },
+    airing: {
+      type: new GraphQLList(DisplayAnimesType),
+      resolve: () => fetchAiring(),
     },
   },
 });

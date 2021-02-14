@@ -1,44 +1,56 @@
 .top_animes_section {
-  width: 90%;
+  width: 93%;
   margin: 2rem auto;
   h1 {
     color: #fff;
   }
 }
+
 .top_animes_list,
 .anime_recommendations {
   margin-top: 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
   align-items: center;
   justify-content: center;
   row-gap: 1rem;
 }
 
+// .testing {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
+
 .anime_item_wrapper {
   height: 350px;
   width: 200px;
   margin: 0.7rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  .anime_item_main {
-    display: flex;
-    flex-direction: column;
-    span {
-      text-align: center;
-      margin-top: 5px;
-      font-size: 0.9em;
-    }
-  }
+  transition: 0.5s ease;
+  justify-content: center;
+
   .anime_image {
     width: 100%;
-    height: 300px;
+    height: 90%;
+    display: flex;
+
     img {
+      align-self: center;
       width: 100%;
-      height: 100%;
-      object-fit: contain;
     }
   }
-  transition: 0.5s ease;
+
+  span {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 0.8rem;
+  }
+
   &:hover {
     transform: scale(1.1);
   }

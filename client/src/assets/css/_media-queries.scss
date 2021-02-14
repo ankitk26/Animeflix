@@ -2,6 +2,7 @@
   nav {
     width: 100%;
     flex-direction: column;
+
     div:nth-child(2) {
       display: flex;
       flex-direction: column;
@@ -12,14 +13,31 @@
     }
   }
 
-  .top_animes_list,
-  .anime_recommendations {
-    grid-template-columns: repeat(2, 1fr);
+  .upcoming_anime {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    color: #ddd;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
-  .anime_image {
-    width: 80%;
-    width: 200px;
+  .top_animes_list,
+  .anime_recommendations {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    // justify-content: space-evenly;
+    // gap: 2rem;
+  }
+
+  .anime_item_wrapper {
+    // height: 200px;
+    width: 150px;
+    span {
+      margin-top: 1px;
+    }
   }
 
   .anime_info_upper {
@@ -44,5 +62,14 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 0.5rem;
     grid-row-gap: 1.5rem;
+  }
+
+  .show_more_btn {
+    width: 100%;
+    padding: 5rem;
+  }
+
+  .top_heading {
+    text-align: center;
   }
 }

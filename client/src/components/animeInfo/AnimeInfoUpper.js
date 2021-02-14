@@ -1,8 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { dateFormatter } from "../../utils/utils";
 
 const AnimeInfoUpper = ({ anime }) => {
-  const { title, image_url, episodes, title_english, score, premiered, genres, type, rating, duration, aired } = anime;
+  const {
+    title,
+    image_url,
+    episodes,
+    title_english,
+    score,
+    premiered,
+    genres,
+    studios,
+    type,
+    rating,
+    duration,
+    aired,
+  } = anime;
 
   return (
     <div className="anime_info_upper">
@@ -10,10 +24,15 @@ const AnimeInfoUpper = ({ anime }) => {
       <div className="anime_info_image_wrapper">
         <img src={image_url} alt={title} className="anime_info_image" />
       </div>
+
       {/* Anime Info */}
       <div>
+        {/* Anime title */}
         <h1>{title}</h1>
-        {title_english !== title && <p className="english_title">{title_english}</p>}
+        {title_english !== title && (
+          <p className="english_title">{title_english}</p>
+        )}
+
         {/* Anime genres */}
         <div className="anime_genre">
           {genres.map((genre) => (
@@ -22,27 +41,38 @@ const AnimeInfoUpper = ({ anime }) => {
             </Link>
           ))}
         </div>
+
         {/* Anime Stats */}
         <div className="anime_info_stats">
           <div>
             <i className="fas fa-film fa-2x"></i>
             <p className="light">Episodes</p>
-            <p>{episodes}</p>
+            <p>{episodes !== null ? episodes : "N/A"}</p>
           </div>
           <div>
             <i className="fas fa-star fa-2x"></i>
             <p className="light">Score</p>
-            <p>{score}</p>
+            <p>{score !== null ? score : "N/A"}</p>
           </div>
           {type === "TV" && (
             <div>
               <i className="fas fa-calendar fa-2x"></i>
               <p className="light">Premiered</p>
-              <p>{premiered}</p>
+              <p>{premiered !== null ? premiered : "N/A"}</p>
             </div>
           )}
         </div>
+
+        {/* Other info */}
         <div className="anime_other_info">
+          <div>
+            Studios:{" "}
+            {studios.map((studio) => (
+              <Link to={`/studio/${studio.mal_id}`} key={studio.mal_id}>
+                {studio.name}
+              </Link>
+            ))}
+          </div>
           <div>
             Type: <span>{type}</span>
           </div>
@@ -54,7 +84,7 @@ const AnimeInfoUpper = ({ anime }) => {
           </div>
           {aired.from !== null && (
             <div>
-              Release Date: <span>{aired.from}</span>
+              Release Date: <span>{dateFormatter(aired.from)}</span>
             </div>
           )}
         </div>
