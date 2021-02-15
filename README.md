@@ -1,6 +1,5 @@
 # Animeflix
 
-[Demo](https://floating-taiga-66924.herokuapp.com/)
 ## Commands
 
 ```bash
