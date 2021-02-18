@@ -1,9 +1,10 @@
 const express = require("express");
-const app = express();
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema");
 const cors = require("cors");
 const path = require("path");
+
+const app = express();
 
 app.use(cors());
 
@@ -15,10 +16,10 @@ app.use(
   })
 );
 
-app.use(express.static(path.join(__dirname, "client", "build")));
+app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
 });
 
 const port = process.env.PORT || 5000;
