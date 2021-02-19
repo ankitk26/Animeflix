@@ -1,11 +1,9 @@
-import React from "react";
 import { useQuery } from "@apollo/client";
-
-import { GET_ANIME_OF_STUDIO } from "../queries/queries";
-
-import Spinner from "../layouts/Spinner";
+import React from "react";
 import AnimeItem from "../components/AnimeItem";
 import ErrorMessage from "../layouts/ErrorMessage";
+import Spinner from "../layouts/Spinner";
+import { GET_ANIME_OF_STUDIO } from "../queries/queries";
 
 const StudioAnime = (props) => {
   const genreId = props.match.params.id;
@@ -22,7 +20,7 @@ const StudioAnime = (props) => {
       ) : (
         <>
           {/* All anime of selected studio */}
-          <h1 className="top_heading">{data.studio.meta.name}</h1>
+          <h1 className="top_heading">{data.studio.studio_name}</h1>
           <div className="top_animes_list">
             {data.studio.anime.map((anime) => (
               <AnimeItem key={anime.mal_id} anime={anime} />

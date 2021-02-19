@@ -1,11 +1,9 @@
-import React from "react";
 import { useQuery } from "@apollo/client";
-
+import React from "react";
 import AnimeInfoLower from "../components/animeInfo/AnimeInfoLower";
 import AnimeInfoUpper from "../components/animeInfo/AnimeInfoUpper";
 import ErrorMessage from "../layouts/ErrorMessage";
 import Spinner from "../layouts/Spinner";
-
 import { GET_ANIME } from "../queries/queries";
 
 const AnimeInfo = (props) => {

@@ -23,10 +23,36 @@
 }
 
 // Title in english
-.english_title {
+.gray_text {
   margin-top: 0.5rem;
   opacity: 0.6;
   font-size: 0.9em;
+}
+
+.basic_info_1 {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 5px;
+  span:nth-child(2) {
+    background-color: #ddd;
+    color: #111;
+    border-radius: 999px;
+    padding: 3px 20px;
+    font-size: 0.8rem;
+  }
+}
+
+.basic_info_2 {
+  margin: 1rem 0 2rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  span:nth-child(2) {
+    background-color: #272727;
+    padding: 3px;
+  }
 }
 
 // Genres of anime
@@ -57,7 +83,7 @@
   display: flex;
   gap: 4rem;
   align-items: center;
-  margin: 3.5rem 0;
+  margin: 2.5rem 0;
   div {
     display: flex;
     flex-direction: column;
@@ -96,6 +122,24 @@
   }
 }
 
+.buttons {
+  margin-top: 2rem;
+  button {
+    padding: 8px;
+    background-color: #272727;
+    border-radius: 2px;
+    cursor: pointer;
+    color: #fff;
+    border: 0;
+    &:hover {
+      opacity: 0.9;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
 // Lower Section
 
 .anime_info_lower {
@@ -107,12 +151,14 @@
 }
 
 // Synopsis
+
 .anime_synopsis {
   padding-bottom: 0.5rem;
   h2 {
     color: #ddd;
     letter-spacing: 2px;
   }
+
   p {
     text-align: justify;
     letter-spacing: 1px;

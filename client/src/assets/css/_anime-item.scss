@@ -55,3 +55,28 @@
     transform: scale(1.1);
   }
 }
+
+.show_more_btn {
+  color: #ddd;
+  background-color: #272727;
+  font-size: 0.8rem;
+  border: none;
+  margin-top: 10px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.show_btn_wrapper {
+  display: flex;
+  justify-content: center;
+}

@@ -5,7 +5,7 @@ function Header() {
   const [search, setSearch] = useState("");
   const history = useHistory();
 
-  // Redirect to results page
+  // Redirect to results page when query is submitted
   const handleSubmit = (e) => {
     e.preventDefault();
     history.push(`/search/${search}`);
@@ -44,6 +44,7 @@ function Header() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search Anime TV or Movie"
+              spellCheck={false}
             />
           </label>
         </form>

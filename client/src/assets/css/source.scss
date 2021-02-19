@@ -1,5 +1,21 @@
 @import "base";
 
+.error_message {
+  color: #fff;
+  font-size: 1.5rem;
+  width: 100%;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.spinner {
+  width: 50px;
+  text-align: center;
+  margin: 2rem auto;
+  display: grid;
+  justify-content: center;
+}
+
 // Header section
 @import "nav";
 
@@ -11,28 +27,3 @@
 
 // Media queries
 @import "media-queries";
-
-.show_more_btn {
-  color: #ddd;
-  background-color: #272727;
-  font-size: 0.8rem;
-  border: none;
-  margin-top: 10px;
-  padding: 10px 20px;
-  border-radius: 999px;
-  text-align: center;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.9;
-  }
-
-  &:focus {
-    outline: none;
-  }
-}
-
-.show_btn_wrapper {
-  display: flex;
-  justify-content: center;
-}

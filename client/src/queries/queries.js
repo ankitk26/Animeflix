@@ -1,9 +1,9 @@
 const { gql } = require("@apollo/client");
 
 // Get all top rated anime
-export const TOP_ANIMES = gql`
-  query TopAnimesQuery {
-    topAnimes {
+export const TOP_ANIME = gql`
+  query TopAnimeQuery {
+    topAnime {
       mal_id
       image_url
       title
@@ -30,9 +30,7 @@ export const GET_ANIME = gql`
         name
       }
       premiered
-      aired {
-        from
-      }
+      airing_period
       score
       genres {
         mal_id
@@ -56,13 +54,11 @@ export const GET_ANIME = gql`
 export const GET_ANIMES_BY_GENRE = gql`
   query GetAnimesByGenreQuery($id: Int!) {
     genre(id: $id) {
-      mal_url {
-        name
-      }
+      genre_name
       anime {
         mal_id
-        title
         image_url
+        title
       }
     }
   }
@@ -72,13 +68,11 @@ export const GET_ANIMES_BY_GENRE = gql`
 export const GET_ANIME_OF_STUDIO = gql`
   query GetAnimeByStudio($id: Int!) {
     studio(id: $id) {
-      meta {
-        name
-      }
+      studio_name
       anime {
         mal_id
-        title
         image_url
+        title
       }
     }
   }

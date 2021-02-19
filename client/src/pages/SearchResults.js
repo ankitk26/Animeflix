@@ -1,10 +1,8 @@
-import React from "react";
 import { useQuery } from "@apollo/client";
-
+import React from "react";
 import AnimeItem from "../components/AnimeItem";
 import ErrorMessage from "../layouts/ErrorMessage";
 import Spinner from "../layouts/Spinner";
-
 import { SEARCH_ANIMES } from "../queries/queries";
 
 const SearchResults = (props) => {

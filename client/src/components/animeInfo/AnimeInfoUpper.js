@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { dateFormatter } from "../../utils/utils";
 
 const AnimeInfoUpper = ({ anime }) => {
   const {
@@ -15,7 +14,7 @@ const AnimeInfoUpper = ({ anime }) => {
     type,
     rating,
     duration,
-    aired,
+    airing_period,
   } = anime;
 
   return (
@@ -29,9 +28,16 @@ const AnimeInfoUpper = ({ anime }) => {
       <div>
         {/* Anime title */}
         <h1>{title}</h1>
-        {title_english !== title && (
-          <p className="english_title">{title_english}</p>
-        )}
+        <div className="basic_info_1">
+          {title_english !== title && <span>{title_english}</span>}
+          <span>{type}</span>
+        </div>
+
+        <div className="basic_info_2">
+          <span className="gray_text">{premiered}</span>
+          <span className="gray_text">{rating}</span>
+          <span className="gray_text">{duration}</span>
+        </div>
 
         {/* Anime genres */}
         <div className="anime_genre">
@@ -54,13 +60,6 @@ const AnimeInfoUpper = ({ anime }) => {
             <p className="light">Score</p>
             <p>{score !== null ? score : "N/A"}</p>
           </div>
-          {type === "TV" && (
-            <div>
-              <i className="fas fa-calendar fa-2x"></i>
-              <p className="light">Premiered</p>
-              <p>{premiered !== null ? premiered : "N/A"}</p>
-            </div>
-          )}
         </div>
 
         {/* Other info */}
@@ -74,19 +73,15 @@ const AnimeInfoUpper = ({ anime }) => {
             ))}
           </div>
           <div>
-            Type: <span>{type}</span>
-          </div>
-          <div>
             Rating: <span>{rating}</span>
           </div>
           <div>
-            Duration: <span>{duration}</span>
+            Original Run: <span>{airing_period}</span>
           </div>
-          {aired.from !== null && (
-            <div>
-              Release Date: <span>{dateFormatter(aired.from)}</span>
-            </div>
-          )}
+        </div>
+
+        <div className="buttons">
+          <button>Add to Watchlist</button>
         </div>
       </div>
     </div>

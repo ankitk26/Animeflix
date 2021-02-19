@@ -1,11 +1,9 @@
-import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-
-import { GET_ANIMES_BY_GENRE } from "../queries/queries";
-
-import Spinner from "../layouts/Spinner";
+import React, { useState } from "react";
 import AnimeItem from "../components/AnimeItem";
 import ErrorMessage from "../layouts/ErrorMessage";
+import Spinner from "../layouts/Spinner";
+import { GET_ANIMES_BY_GENRE } from "../queries/queries";
 
 const GenreAnimes = (props) => {
   const genreId = props.match.params.id;
@@ -27,7 +25,7 @@ const GenreAnimes = (props) => {
       ) : (
         <>
           {/* Display all anime of selected genre */}
-          <h1 className="top_heading">{data.genre.mal_url.name}</h1>
+          <h1 className="top_heading">{data.genre.genre_name}</h1>
           <div className="top_animes_list">
             {data.genre.anime.slice(0, ending).map((anime) => (
               <AnimeItem key={anime.mal_id} anime={anime} />
