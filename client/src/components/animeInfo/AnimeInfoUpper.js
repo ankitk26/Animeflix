@@ -21,7 +21,7 @@ const AnimeInfoUpper = ({ anime }) => {
     <div className="anime_info_upper">
       {/* Anime Image */}
       <div className="anime_info_image_wrapper">
-        <img src={image_url} alt={title} className="anime_info_image" />
+        <img src={image_url} alt="anime poster" className="anime_info_image" />
       </div>
 
       {/* Anime Info */}
@@ -34,9 +34,9 @@ const AnimeInfoUpper = ({ anime }) => {
         </div>
 
         <div className="basic_info_2">
-          <span className="gray_text">{premiered}</span>
-          <span className="gray_text">{rating}</span>
-          <span className="gray_text">{duration}</span>
+          {premiered && <span className="gray_text">{premiered}</span>}
+          {rating && <span className="gray_text rating">{rating}</span>}
+          {duration && <span className="gray_text">{duration}</span>}
         </div>
 
         {/* Anime genres */}
@@ -71,9 +71,6 @@ const AnimeInfoUpper = ({ anime }) => {
                 {studio.name}
               </Link>
             ))}
-          </div>
-          <div>
-            Rating: <span>{rating}</span>
           </div>
           <div>
             Original Run: <span>{airing_period}</span>

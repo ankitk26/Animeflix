@@ -22,11 +22,7 @@ const AnimeInfoLower = ({ anime }) => {
             <div className="anime_characters">
               {characters.map((character) => (
                 <div key={character.mal_id} className="anime_character">
-                  <img
-                    src={character.image_url}
-                    alt={character.name}
-                    className="character_image"
-                  />
+                  <img src={character.image_url} alt={character.name} className="character_image" />
                   <span>{character.name}</span>
                 </div>
               ))}
@@ -42,10 +38,7 @@ const AnimeInfoLower = ({ anime }) => {
           <h2 className="top_heading">More Anime TV and Movies</h2>
           <div className="anime_recommendations">
             {recommendations.slice(0, 20).map((recommendation) => (
-              <AnimeItem
-                key={recommendation.image_url}
-                anime={recommendation}
-              />
+              <AnimeItem key={recommendation.image_url} anime={recommendation} />
             ))}
           </div>
         </div>

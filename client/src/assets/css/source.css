@@ -290,15 +290,15 @@ nav form input:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 1rem;
-  margin-top: 5px;
+  gap: 2rem;
+  margin-top: 12px;
 }
 
 .basic_info_1 span:nth-child(2) {
   background-color: #ddd;
   color: #111;
   border-radius: 999px;
-  padding: 3px 20px;
+  padding: 2px 6px;
   font-size: 0.8rem;
 }
 
@@ -415,10 +415,11 @@ nav form input:focus {
   cursor: pointer;
   color: #fff;
   border: 0;
+  border: 1px solid #181818;
 }
 
 .buttons button:hover {
-  opacity: 0.9;
+  border-color: #ddd;
 }
 
 .buttons button:focus {
