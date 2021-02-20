@@ -4,6 +4,7 @@
   "description": "Anime app using React, Apollo and GraphQL",
   "main": "server.js",
   "scripts": {
+    "start": "cd server && node server",
     "server": "cd server && nodemon server",
     "client": "cd client && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\""
