@@ -32,6 +32,10 @@ function Header() {
           <Link to="/airing" className="upcoming_anime">
             <span>Airing Anime</span>
           </Link>
+
+          <Link to="/watchlist" className="upcoming_anime">
+            <span>Watchlist</span>
+          </Link>
         </div>
 
         {/* Search anime */}

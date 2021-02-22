@@ -128,12 +128,14 @@
     padding: 8px;
     background-color: #272727;
     border-radius: 2px;
-    cursor: pointer;
     color: #fff;
     border: 0;
     border: 1px solid #181818;
-    &:hover {
-      border-color: #ddd;
+    &.not_added {
+      cursor: pointer;
+      &:hover {
+        border-color: #ddd;
+      }
     }
     &:focus {
       outline: none;

@@ -8,6 +8,7 @@ import DisplayAnimesList from "./pages/DisplayAnimesList";
 import GenreAnimes from "./pages/GenreAnimes";
 import SearchResults from "./pages/SearchResults";
 import StudioAnime from "./pages/StudioAnime";
+import WatchList from "./pages/WatchList";
 
 const client = new ApolloClient({
   uri: "/graphql",
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/search/:query" component={SearchResults} />
           <Route path="/upcoming" render={(props) => <DisplayAnimesList type="upcoming" {...props} />} />
           <Route path="/airing" render={(props) => <DisplayAnimesList type="airing" {...props} />} />
+          <Route path="/watchlist" component={WatchList} />
         </Switch>
       </Router>
     </ApolloProvider>

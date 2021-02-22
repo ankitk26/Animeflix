@@ -1,5 +1,7 @@
 const { gql } = require("@apollo/client");
 
+// Queries
+
 // Get all top rated anime
 export const TOP_ANIME = gql`
   query TopAnimeQuery {
@@ -32,6 +34,7 @@ export const GET_ANIME = gql`
       premiered
       airing_period
       score
+      inWatchlist
       genres {
         mal_id
         name
@@ -106,6 +109,50 @@ export const FETCH_AIRING = gql`
     airing {
       mal_id
       image_url
+      title
+    }
+  }
+`;
+
+export const GET_WATCHLIST = gql`
+  query GetWatchlist {
+    getWatchList {
+      _id
+      mal_id
+      watched
+      title
+      image_url
+      airing_period
+      score
+      createdAt
+      title_english
+    }
+  }
+`;
+
+// Mutations
+
+// Add anime to watchlist
+export const ADD_ANIME = gql`
+  mutation AddAnime($animeInput: WatchListInput) {
+    addAnime(animeInput: $animeInput) {
+      _id
+      mal_id
+      title
+      title_english
+      image_url
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+// Remove an anime from the watchlist
+export const REMOVE_ANIME = gql`
+  mutation RemoveAnime($id: ID) {
+    removeAnime(id: $id) {
+      _id
+      mal_id
       title
     }
   }

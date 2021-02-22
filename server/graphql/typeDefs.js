@@ -1,18 +1,6 @@
 const { gql } = require("apollo-server-express");
 
-const {
-  fetchAnime,
-  fetchCharacters,
-  fetchRecommendations,
-  fetchGenre,
-  fetchUpcoming,
-  fetchStudios,
-  fetchTopAnimes,
-  fetchAiring,
-  searchAnime,
-} = require("./api_calls");
-
-const typeDefs = gql`
+module.exports = gql`
   type Query {
     anime(id: Int): Anime
     topAnime: [DisplayAnime]
@@ -21,6 +9,8 @@ const typeDefs = gql`
     studio(id: Int): Studio
     airing: [DisplayAnime]
     search(query: String): [DisplayAnime]
+    getWatchList: [WatchListAnime]
+    getAnime(mal_id: Int!): Boolean
   }
 
   type Anime {
@@ -41,6 +31,7 @@ const typeDefs = gql`
     genres: [Genre]
     characters: [DisplayAnime]
     recommendations: [DisplayAnime]
+    inWatchlist: Boolean
   }
 
   type Genre {
@@ -64,33 +55,33 @@ const typeDefs = gql`
     title: String
     name: String
   }
+
+  scalar Date
+
+  type WatchListAnime {
+    _id: ID
+    mal_id: Int
+    image_url: String
+    watched: Boolean
+    title: String
+    title_english: String
+    score: Float
+    airing_period: String
+    createdAt: Date
+    updatedAt: Date
+  }
+
+  input WatchListInput {
+    mal_id: Int!
+    title: String!
+    title_english: String
+    image_url: String
+    airing_period: String
+    score: Float
+  }
+
+  type Mutation {
+    addAnime(animeInput: WatchListInput): WatchListAnime
+    removeAnime(id: ID): WatchListAnime
+  }
 `;
-
-// resolvers
-const resolvers = {
-  Query: {
-    anime: (_, args) => fetchAnime(args),
-    topAnime: () => fetchTopAnimes(),
-    genre: (_, args) => fetchGenre(args),
-    upcoming: () => fetchUpcoming(),
-    studio: (_, { id }) => fetchStudios(id),
-    airing: () => fetchAiring(),
-    search: (_, { query }) => searchAnime(query),
-  },
-
-  Anime: {
-    characters: (parent) => fetchCharacters(parent),
-    recommendations: (parent) => fetchRecommendations(parent),
-    airing_period: (parent) => parent.aired.string,
-  },
-
-  Genres: {
-    genre_name: (parent) => parent.mal_url.name,
-  },
-
-  Studio: {
-    studio_name: (parent) => parent.meta.name,
-  },
-};
-
-module.exports = { typeDefs, resolvers };

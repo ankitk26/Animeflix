@@ -13,6 +13,10 @@ const Home = ({ type }) => {
 
   const showMore = () => setEnding((prev) => prev + 10);
 
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
+
   const getDisplayItems = (type) => {
     switch (type) {
       case "top_rated":

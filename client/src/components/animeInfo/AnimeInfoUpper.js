@@ -1,8 +1,14 @@
-import React from "react";
+import { useMutation } from "@apollo/client";
+import { IconButton } from "@material-ui/core";
+import SnackBar from "@material-ui/core/Snackbar";
+import CloseIcon from "@material-ui/icons/Close";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ADD_ANIME, GET_ANIME } from "../../queries/queries";
 
 const AnimeInfoUpper = ({ anime }) => {
   const {
+    mal_id,
     title,
     image_url,
     episodes,
@@ -14,8 +20,20 @@ const AnimeInfoUpper = ({ anime }) => {
     type,
     rating,
     duration,
+    inWatchlist,
     airing_period,
   } = anime;
+
+  const [open, setOpen] = useState(false);
+
+  const [addAnime] = useMutation(ADD_ANIME, { refetchQueries: [{ query: GET_ANIME, variables: { id: mal_id } }] });
+
+  const addToWatchlist = async () => {
+    await addAnime({
+      variables: { animeInput: { mal_id, title, title_english, image_url, airing_period, score } },
+    });
+    setOpen(true);
+  };
 
   return (
     <div className="anime_info_upper">
@@ -35,8 +53,8 @@ const AnimeInfoUpper = ({ anime }) => {
 
         <div className="basic_info_2">
           {premiered && <span className="gray_text">{premiered}</span>}
-          {rating && <span className="gray_text rating">{rating}</span>}
-          {duration && <span className="gray_text">{duration}</span>}
+          {rating && rating !== "None" && <span className="gray_text rating">{rating}</span>}
+          {duration && duration !== "Unknown" && <span className="gray_text">{duration}</span>}
         </div>
 
         {/* Anime genres */}
@@ -78,8 +96,28 @@ const AnimeInfoUpper = ({ anime }) => {
         </div>
 
         <div className="buttons">
-          <button>Add to Watchlist</button>
+          {inWatchlist ? (
+            <button>Added to watchlist</button>
+          ) : (
+            <button className="not_added" onClick={() => addToWatchlist()}>
+              Add to Watchlist
+            </button>
+          )}
         </div>
+
+        <SnackBar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={open}
+          autoHideDuration={3000}
+          onClose={() => setOpen(false)}
+          message="Anime added to watchlist"
+          key={"bottom center"}
+          action={
+            <IconButton size="small" color="inherit" onClick={() => setOpen(false)}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          }
+        />
       </div>
     </div>
   );

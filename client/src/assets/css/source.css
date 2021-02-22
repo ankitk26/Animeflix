@@ -412,13 +412,16 @@ nav form input:focus {
   padding: 8px;
   background-color: #272727;
   border-radius: 2px;
-  cursor: pointer;
   color: #fff;
   border: 0;
   border: 1px solid #181818;
 }
 
-.buttons button:hover {
+.buttons button.not_added {
+  cursor: pointer;
+}
+
+.buttons button.not_added:hover {
   border-color: #ddd;
 }
 
@@ -507,6 +510,112 @@ nav form input:focus {
 
 .anime_recommendations {
   margin-top: 0.5rem;
+}
+
+.no_items p {
+  margin: 3rem 0 1rem 0;
+  color: #fafafa;
+}
+
+.no_items a {
+  background-color: transparent;
+  color: #fafafa;
+  border: 0;
+  text-decoration: underline;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.no_items a:hover {
+  color: #ddd;
+}
+
+.no_items a:focus {
+  outline: none;
+}
+
+.watchlist_item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #272727;
+  margin: 2rem 0;
+}
+
+.watchlist_item div:nth-child(1) {
+  height: 100%;
+}
+
+.watchlist_item div:nth-child(1) img {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 75%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.watchlist_item_info {
+  -ms-flex-item-align: center;
+      align-self: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.watchlist_item_info h2 {
+  color: #ddd;
+}
+
+.watchlist_item_info h4 {
+  font-weight: 200;
+  color: #ccc;
+  margin-top: 0.5rem;
+}
+
+.watchlist_item_info div {
+  margin: 1rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+}
+
+.watchlist_item_info div span {
+  color: #fff;
+}
+
+.watchlist_item_info .isWatched {
+  margin-top: 2rem;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+  border: 0;
+  font-size: 0.9rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  color: #ddd;
+  background-color: #181818;
+  cursor: pointer;
+}
+
+.watchlist_item_info .isWatched:hover {
+  background-color: rgba(24, 24, 24, 0.6);
+}
+
+.watchlist_item_info .isWatched:focus {
+  outline: none;
 }
 
 @media all and (max-width: 768px) {
