@@ -1,73 +1,48 @@
 import { useQuery } from "@apollo/client";
+import { Box, Button } from "@material-ui/core";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import AnimeItem from "../components/AnimeItem";
-import { allGenres } from "../constants/constants";
+import AnimeGrid from "../components/AnimeGrid";
 import ErrorMessage from "../layouts/ErrorMessage";
 import Spinner from "../layouts/Spinner";
 import { getHeading, getQuery } from "../utils/utils";
 
 const Home = ({ type }) => {
-  const [ending, setEnding] = useState(10);
+  const [ending, setEnding] = useState(32);
   const { loading, error, data } = useQuery(getQuery(type));
 
-  const showMore = () => setEnding((prev) => prev + 10);
-
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
+  const showMore = () => setEnding((prev) => prev + 30);
 
   const getDisplayItems = (type) => {
     switch (type) {
       case "top_rated":
-        return data.topAnime.slice(0, ending).map((anime) => <AnimeItem key={anime.mal_id} anime={anime} />);
+        return data.topAnime.slice(0, ending);
       case "upcoming":
-        return data.upcoming.map((anime) => <AnimeItem key={anime.mal_id} anime={anime} />);
+        return data.upcoming;
       default:
-        return data.airing.map((anime) => <AnimeItem key={anime.mal_id} anime={anime} />);
+        return data.airing;
     }
   };
 
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <ErrorMessage />;
+  }
+
   return (
-    <div className="top_animes_section">
-      <h1 className="top_heading">{getHeading(type)}</h1>
+    <>
+      <AnimeGrid title={getHeading(type)} data={getDisplayItems(type)} />
 
-      {error && <ErrorMessage />}
-
-      {loading ? (
-        <Spinner />
-      ) : (
-        <>
-          {/* Display all anime */}
-          <div className="top_animes_list">{data && getDisplayItems(type)}</div>
-          {type === "top_rated" && (
-            <>
-              {ending < 50 && (
-                <div className="show_btn_wrapper">
-                  {/* Button for loading more items */}
-                  <button onClick={() => showMore()} className="show_more_btn">
-                    LOAD MORE
-                  </button>
-                </div>
-              )}
-
-              <div style={{ marginTop: "2rem" }}>
-                <h1>Anime by Genre</h1>
-                <div className="anime_genre" style={{ marginTop: "2rem" }}>
-                  {/* Display anime by genre */}
-
-                  {allGenres.map((genre) => (
-                    <Link to={`/animes/genre/${genre.id}`} key={genre.id}>
-                      <span>{genre.genre}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-        </>
+      {type === "top_rated" && ending < 50 && (
+        <Box my={4} display="flex" justifyContent="center">
+          <Button color="primary" variant="outlined" onClick={() => showMore()}>
+            LOAD MORE
+          </Button>
+        </Box>
       )}
-    </div>
+    </>
   );
 };
 

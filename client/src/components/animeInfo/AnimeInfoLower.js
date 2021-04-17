@@ -1,49 +1,37 @@
+import { Box, Divider, Typography } from "@material-ui/core";
 import React from "react";
-import AnimeItem from "../AnimeItem";
+import Characters from "./Characters";
+import Gallery from "./Gallery";
+import Recommendations from "./Recommendations";
 
 const AnimeInfoLower = ({ anime }) => {
-  const { synopsis, recommendations, characters } = anime;
+  const { synopsis, recommendations, characters, pictures } = anime;
 
   return (
-    <div className="anime_info_lower">
+    <Box mt={4}>
       {/* Synopsis */}
-      <div className="anime_synopsis">
-        <h2>Synopsis</h2>
-        <p className="anime_synopsis">{synopsis}</p>
-      </div>
+      <Box pb={3}>
+        <Typography variant="h4">Synopsis</Typography>
+        <Box mt={1}>
+          <Typography variant="body1" color="textSecondary">
+            {synopsis}
+          </Typography>
+        </Box>
+      </Box>
 
-      <hr />
+      <Divider />
 
-      {/* Characters section */}
-      {characters.length > 0 && (
-        <>
-          <div className="anime_characters_wrapper">
-            <h2>Characters</h2>
-            <div className="anime_characters">
-              {characters.map((character) => (
-                <div key={character.mal_id} className="anime_character">
-                  <img src={character.image_url} alt={character.name} className="character_image" />
-                  <span>{character.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <hr />
-        </>
+      {/* Characters */}
+      {characters.length && <Characters characters={characters} />}
+
+      {/* Gallery */}
+      {pictures.length && <Gallery pictures={pictures} />}
+
+      {/* Recommendations */}
+      {recommendations.length && (
+        <Recommendations recommendations={recommendations} />
       )}
-
-      {/* Recommendations section */}
-      {recommendations.length > 0 && (
-        <div className="anime_recommendations_wrapper">
-          <h2 className="top_heading">More Anime TV and Movies</h2>
-          <div className="anime_recommendations">
-            {recommendations.slice(0, 20).map((recommendation) => (
-              <AnimeItem key={recommendation.image_url} anime={recommendation} />
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
+    </Box>
   );
 };
 

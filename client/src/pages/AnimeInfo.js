@@ -2,14 +2,15 @@ import { useQuery } from "@apollo/client";
 import React from "react";
 import AnimeInfoLower from "../components/animeInfo/AnimeInfoLower";
 import AnimeInfoUpper from "../components/animeInfo/AnimeInfoUpper";
+import { GET_ANIME_BY_ID } from "../graphql/queries";
 import ErrorMessage from "../layouts/ErrorMessage";
 import Spinner from "../layouts/Spinner";
-import { GET_ANIME } from "../queries/queries";
 
 const AnimeInfo = (props) => {
   const id = props.match.params.id;
-  const { loading, error, data } = useQuery(GET_ANIME, {
+  const { loading, error, data } = useQuery(GET_ANIME_BY_ID, {
     variables: { id: parseInt(id) },
+    fetchPolicy: "no-cache",
   });
 
   return (

@@ -1,4 +1,4 @@
-import { FETCH_AIRING, FETCH_UPCOMING, TOP_ANIME } from "../queries/queries";
+import { FETCH_AIRING, FETCH_UPCOMING, TOP_ANIME } from "../graphql/queries";
 
 export const dateFormatter = (inputDate) => {
   let date = new Date(inputDate);

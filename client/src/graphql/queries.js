@@ -2,6 +2,17 @@ const { gql } = require("@apollo/client");
 
 // Queries
 
+// Auth
+export const USER_INFO = gql`
+  query Me {
+    me {
+      id
+      email
+      name
+    }
+  }
+`;
+
 // Get all top rated anime
 export const TOP_ANIME = gql`
   query TopAnimeQuery {
@@ -14,7 +25,7 @@ export const TOP_ANIME = gql`
 `;
 
 // Get information about the anime selected
-export const GET_ANIME = gql`
+export const GET_ANIME_BY_ID = gql`
   query GetAnimeQuery($id: Int!) {
     anime(id: $id) {
       mal_id
@@ -44,6 +55,7 @@ export const GET_ANIME = gql`
         image_url
         name
       }
+      pictures
       recommendations {
         mal_id
         image_url
@@ -54,9 +66,9 @@ export const GET_ANIME = gql`
 `;
 
 // Get all the anime of selected genre
-export const GET_ANIMES_BY_GENRE = gql`
-  query GetAnimesByGenreQuery($id: Int!) {
-    genre(id: $id) {
+export const GET_ANIME_BY_GENRE = gql`
+  query GetAnimesByGenreQuery($id: Int!, $page: Int!) {
+    genre(id: $id, page: $page) {
       genre_name
       anime {
         mal_id
@@ -68,7 +80,7 @@ export const GET_ANIMES_BY_GENRE = gql`
 `;
 
 // Get all anime of selected studio
-export const GET_ANIME_OF_STUDIO = gql`
+export const GET_ANIME_BY_STUDIO = gql`
   query GetAnimeByStudio($id: Int!) {
     studio(id: $id) {
       studio_name
@@ -122,7 +134,6 @@ export const GET_WATCHLIST = gql`
       watched
       title
       image_url
-      airing_period
       score
       createdAt
       title_english
@@ -131,6 +142,32 @@ export const GET_WATCHLIST = gql`
 `;
 
 // Mutations
+
+export const LOGIN_USER = gql`
+  mutation LoginUser($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      id
+      email
+      name
+    }
+  }
+`;
+
+export const REGISTER_USER = gql`
+  mutation RegisterUser($registerInput: RegisterInput) {
+    register(registerInput: $registerInput) {
+      id
+      name
+      email
+    }
+  }
+`;
+
+export const LOGOUT = gql`
+  mutation Logout {
+    logout
+  }
+`;
 
 // Add anime to watchlist
 export const ADD_ANIME = gql`
@@ -141,6 +178,7 @@ export const ADD_ANIME = gql`
       title
       title_english
       image_url
+      score
       createdAt
       updatedAt
     }

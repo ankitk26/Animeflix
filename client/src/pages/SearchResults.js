@@ -1,9 +1,9 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
-import AnimeItem from "../components/AnimeItem";
+import AnimeGrid from "../components/AnimeGrid";
+import { SEARCH_ANIMES } from "../graphql/queries";
 import ErrorMessage from "../layouts/ErrorMessage";
 import Spinner from "../layouts/Spinner";
-import { SEARCH_ANIMES } from "../queries/queries";
 
 const SearchResults = (props) => {
   const query = props.match.params.query;
@@ -11,23 +11,16 @@ const SearchResults = (props) => {
     variables: { search: query },
   });
 
+  if (error) {
+    return <ErrorMessage />;
+  }
+
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
-    <div className="top_animes_section">
-      <h1 className="top_heading">Search Results for "{query}"</h1>
-
-      {error && <ErrorMessage />}
-
-      {loading ? (
-        <Spinner />
-      ) : (
-        // Search results
-        <div className="top_animes_list">
-          {data.search.map((anime) => (
-            <AnimeItem key={anime.mal_id} anime={anime} />
-          ))}
-        </div>
-      )}
-    </div>
+    <AnimeGrid title={`Search results for "${query}"`} data={data.search} />
   );
 };
 

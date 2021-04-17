@@ -49,3 +49,26 @@ export const allGenres = genres.map((genre, index) => ({
   id: index + 1,
   genre,
 }));
+
+export const navLinks = [
+  {
+    to: "/",
+    text: "Home",
+  },
+  {
+    to: "/animes/genre/1",
+    text: "Genres",
+  },
+  {
+    to: "/upcoming",
+    text: "Upcoming",
+  },
+  {
+    to: "/airing",
+    text: "Airing",
+  },
+  {
+    to: "/watchlist",
+    text: "Watchlist",
+  },
+];

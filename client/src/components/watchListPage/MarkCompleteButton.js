@@ -1,12 +1,15 @@
 import { useMutation } from "@apollo/client";
 import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
 import React, { useState } from "react";
-import { GET_WATCHLIST, REMOVE_ANIME } from "../../queries/queries";
+import { GET_WATCHLIST, REMOVE_ANIME } from "../../graphql/queries";
 
-const DeleteAnimeButton = ({ id, mal_id, title }) => {
+const MarkCompleteButton = ({ title, id }) => {
   const [open, setOpen] = useState(false);
 
-  const [removeAnime] = useMutation(REMOVE_ANIME, { refetchQueries: [{ query: GET_WATCHLIST }] });
+  const [removeAnime] = useMutation(REMOVE_ANIME, {
+    refetchQueries: [{ query: GET_WATCHLIST }],
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,19 +30,25 @@ const DeleteAnimeButton = ({ id, mal_id, title }) => {
 
   return (
     <>
-      <button className="isWatched" onClick={handleClickOpen}>
-        <i className="fas fa-check-square" style={{ color: "#fff", backgroundColor: "#272727" }} />
-        <span>REMOVE FROM WATCHLIST</span>
-      </button>
+      <Button
+        variant="contained"
+        color="primary"
+        startIcon={<BookmarkIcon />}
+        onClick={handleClickOpen}
+      >
+        Remove from watchlist
+      </Button>
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby={`alert-dialog-title-${mal_id}`}
+        aria-labelledby={`alert-dialog-title-${id}`}
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id={`alert-dialog-title-${mal_id}`}>{`Remove ${title} from the watchlist?`}</DialogTitle>
+        <DialogTitle
+          id={`alert-dialog-title-${id}`}
+        >{`Remove ${title} from the watchlist?`}</DialogTitle>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="textPrimary">
             Cancel
           </Button>
           <Button onClick={handleRemoveAnime} color="secondary" autoFocus>
@@ -51,4 +60,4 @@ const DeleteAnimeButton = ({ id, mal_id, title }) => {
   );
 };
 
-export default DeleteAnimeButton;
+export default MarkCompleteButton;

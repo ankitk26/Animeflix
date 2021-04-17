@@ -3,14 +3,15 @@ const { gql } = require("apollo-server-express");
 module.exports = gql`
   type Query {
     anime(id: Int): Anime
-    topAnime: [DisplayAnime]
-    genre(id: Int): Genres
-    upcoming: [DisplayAnime]
+    genre(id: Int, page: Int): Genres
     studio(id: Int): Studio
-    airing: [DisplayAnime]
-    search(query: String): [DisplayAnime]
-    getWatchList: [WatchListAnime]
     getAnime(mal_id: Int!): Boolean
+    search(query: String): [AnimeItem]
+    topAnime: [AnimeItem]
+    upcoming: [AnimeItem]
+    airing: [AnimeItem]
+    getWatchList: [WatchListAnime]
+    me: User
   }
 
   type Anime {
@@ -29,8 +30,9 @@ module.exports = gql`
     studios: [Genre]
     airing_period: String
     genres: [Genre]
-    characters: [DisplayAnime]
-    recommendations: [DisplayAnime]
+    characters: [Character]
+    pictures: [String]
+    recommendations: [AnimeItem]
     inWatchlist: Boolean
   }
 
@@ -41,19 +43,24 @@ module.exports = gql`
 
   type Genres {
     genre_name: String
-    anime: [DisplayAnime]
+    anime: [AnimeItem]
   }
 
   type Studio {
     studio_name: String
-    anime: [DisplayAnime]
+    anime: [AnimeItem]
   }
 
-  type DisplayAnime {
+  type Character {
+    mal_id: Int
+    image_url: String
+    name: String
+  }
+
+  type AnimeItem {
     mal_id: Int
     image_url: String
     title: String
-    name: String
   }
 
   scalar Date
@@ -61,14 +68,14 @@ module.exports = gql`
   type WatchListAnime {
     _id: ID
     mal_id: Int
-    image_url: String
-    watched: Boolean
     title: String
     title_english: String
+    image_url: String
     score: Float
-    airing_period: String
+    watched: Boolean
     createdAt: Date
     updatedAt: Date
+    user: ID!
   }
 
   input WatchListInput {
@@ -76,12 +83,27 @@ module.exports = gql`
     title: String!
     title_english: String
     image_url: String
-    airing_period: String
     score: Float
+  }
+
+  type User {
+    id: ID!
+    email: String!
+    name: String!
+  }
+
+  input RegisterInput {
+    email: String!
+    name: String!
+    password: String!
+    confirmPassword: String!
   }
 
   type Mutation {
     addAnime(animeInput: WatchListInput): WatchListAnime
     removeAnime(id: ID): WatchListAnime
+    login(email: String!, password: String!): User!
+    register(registerInput: RegisterInput): User!
+    logout: Boolean!
   }
 `;

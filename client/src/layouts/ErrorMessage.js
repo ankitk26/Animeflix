@@ -1,5 +1,15 @@
+import { Alert, AlertTitle } from "@material-ui/lab";
 import React from "react";
 
-export default function ErrorMessage() {
-  return <p className="error_message">Error! Please check your internet connection or try refreshing the page</p>;
-}
+const ErrorMessage = ({ message }) => {
+  return (
+    <Alert severity="error">
+      <AlertTitle>Error</AlertTitle>
+      {message
+        ? message
+        : "Try refreshing the page or checking your internet connection"}
+    </Alert>
+  );
+};
+
+export default ErrorMessage;

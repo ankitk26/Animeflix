@@ -1,48 +1,110 @@
 import { useQuery } from "@apollo/client";
-import React, { useState } from "react";
-import AnimeItem from "../components/AnimeItem";
+import { Box, Chip, makeStyles, Typography } from "@material-ui/core";
+import { Pagination } from "@material-ui/lab";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import AnimeGrid from "../components/AnimeGrid";
+import { allGenres } from "../constants/constants";
+import { GET_ANIME_BY_GENRE } from "../graphql/queries";
 import ErrorMessage from "../layouts/ErrorMessage";
 import Spinner from "../layouts/Spinner";
-import { GET_ANIMES_BY_GENRE } from "../queries/queries";
+
+const useStyles = makeStyles((theme) => ({
+  genre: {
+    cursor: "pointer",
+    "&:hover": {
+      color: theme.palette.primary.main,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}));
 
 const GenreAnimes = (props) => {
+  const classes = useStyles();
   const genreId = props.match.params.id;
-  const { loading, error, data } = useQuery(GET_ANIMES_BY_GENRE, {
-    variables: { id: parseInt(genreId) },
+  const [page, setPage] = useState(1);
+
+  const { loading, error, data } = useQuery(GET_ANIME_BY_GENRE, {
+    variables: { id: parseInt(genreId), page },
   });
 
-  // Upper limit of displayed anime
-  const [ending, setEnding] = useState(50);
+  const handlePageChange = (e, page) => {
+    setPage(page);
+  };
 
-  const showMore = () => setEnding((prev) => prev + 50);
+  useEffect(() => {
+    setPage(1);
+  }, [genreId]);
+
+  if (error) {
+    return <ErrorMessage />;
+  }
 
   return (
-    <div className="top_animes_section">
-      {error && <ErrorMessage />}
+    <>
+      <Box mb={10}>
+        <Typography variant="h4">Anime by Genre</Typography>
+        <Box
+          mt={4}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexWrap="wrap"
+          gridGap={15}
+        >
+          {allGenres.map((genre) => (
+            <Link to={`/animes/genre/${genre.id}`} key={genre.id}>
+              <Chip
+                label={genre.genre}
+                variant={
+                  genre.id === parseInt(genreId) ? "default" : "outlined"
+                }
+                className={classes.genre}
+              />
+            </Link>
+          ))}
+        </Box>
+      </Box>
 
       {loading ? (
         <Spinner />
       ) : (
         <>
-          {/* Display all anime of selected genre */}
-          <h1 className="top_heading">{data.genre.genre_name}</h1>
-          <div className="top_animes_list">
-            {data.genre.anime.slice(0, ending).map((anime) => (
-              <AnimeItem key={anime.mal_id} anime={anime} />
-            ))}
-          </div>
+          <Box mb={4} display="flex" justifyContent="center">
+            <Pagination
+              count={10}
+              page={page}
+              variant="outlined"
+              shape="rounded"
+              onChange={handlePageChange}
+            />
+          </Box>
 
-          {/* Load more button */}
-          {ending < 100 && (
-            <div className="show_btn_wrapper">
-              <button onClick={() => showMore()} className="show_more_btn">
+          <AnimeGrid title={data.genre.genre_name} data={data.genre.anime} />
+
+          <Box mt={4} display="flex" justifyContent="center">
+            <Pagination
+              count={10}
+              page={page}
+              variant="outlined"
+              shape="rounded"
+              onChange={handlePageChange}
+            />
+          </Box>
+          {/* {ending < 100 && (
+            <Box my={4} display="flex" justifyContent="center">
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => showMore()}
+              >
                 LOAD MORE
-              </button>
-            </div>
-          )}
+              </Button>
+            </Box>
+          )} */}
         </>
       )}
-    </div>
+    </>
   );
 };
 
